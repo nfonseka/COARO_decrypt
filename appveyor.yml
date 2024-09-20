@@ -1,7 +1,7 @@
 image:
-- Visual Studio 2019
+#- Visual Studio 2019
 - macOS
-- Ubuntu
+#- Ubuntu
 
 skip_branch_with_pr: true
 stack: python 3.10
