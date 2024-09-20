@@ -1,5 +1,6 @@
 image:
 - macOS
+- Ubuntu
 
 skip_branch_with_pr: true
 stack: python 3.10
@@ -43,6 +44,8 @@ for:
     - image: macOS
 
   after_build:
+  - ls
+  - ls dist
   - tar -czvf coaro_decrypt-macos.tar.gz -C dist
 
   artifacts:
@@ -58,7 +61,7 @@ for:
     - image: Ubuntu
 
   after_build:
-  - tar -czvf coaro_decrypt-linux.tar.gz -C dist coaro_decrypt
+  - tar -czvf coaro_decrypt-linux.tar.gz -C dist
 
   artifacts:
   - path: coaro_decrypt-linux.tar.gz
