@@ -1,5 +1,4 @@
 image:
-- Visual Studio 2019
 - macOS
 - Ubuntu
 
@@ -43,9 +42,6 @@ for:
   matrix:
     only:
     - image: macOS
-
-  after_build:
-  - tar -czvf coaro_decrypt-macos.tar.gz -C dist coaro_decrypt.app
 
   artifacts:
   - path: coaro_decrypt-macos.tar.gz
