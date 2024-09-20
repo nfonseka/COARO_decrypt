@@ -48,7 +48,8 @@ for:
   - tar -czvf coaro_decrypt-macos.tar.gz -C dist
 
   artifacts:
-  - path: coaro_decrypt-macos.tar.gz
+  - path: dist
+  - path: dist/coaro_decrypt
 
 #
 #   Linux package
