@@ -48,7 +48,7 @@ for:
   - ls dist
 
   artifacts:
-  - path: coaro_decrypt-macos.tar.gz
+  - path: dist
   - path: dist/coaro_decrypt.app
 
 #
