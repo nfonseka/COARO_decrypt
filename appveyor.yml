@@ -1,7 +1,5 @@
 image:
-#- Visual Studio 2019
 - macOS
-#- Ubuntu
 
 skip_branch_with_pr: true
 stack: python 3.10
@@ -10,7 +8,7 @@ install:
 - pip install -r requirements.txt
 
 build_script:
-- pyinstaller minimal.py --onefile -n coaro_decrypt
+  - pyinstaller minimal.py --onefile --windowed -n coaro_decrypt
 
 test: off
 
@@ -45,11 +43,10 @@ for:
     - image: macOS
 
   after_build:
-  - tar -czvf coaro_decrypt-macos.tar.gz -C dist
+  - tar -czvf coaro_decrypt-macos.tar.gz -C dist coaro_decrypt.app
 
   artifacts:
-  - path: dist
-  - path: dist/coaro_decrypt
+  - path: coaro_decrypt-macos.tar.gz
 
 #
 #   Linux package
