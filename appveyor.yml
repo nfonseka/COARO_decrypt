@@ -46,7 +46,6 @@ for:
   after_build:
   - ls
   - ls dist
-  - tar -czvf coaro_decrypt-macos.tar.gz -C dist
 
   artifacts:
   - path: coaro_decrypt-macos.tar.gz
