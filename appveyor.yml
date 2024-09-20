@@ -44,11 +44,11 @@ for:
     only:
     - image: macOS
 
-#  after_build:
-#  - tar -czvf coaro_decrypt-macos.tar.gz -C dist coaro_decrypt.app
+  after_build:
+  - tar -czvf coaro_decrypt-macos.tar.gz -C dist
 
   artifacts:
-  - path: coaro_decrypt.app
+  - path: coaro_decrypt-macos.tar.gz
 
 #
 #   Linux package
