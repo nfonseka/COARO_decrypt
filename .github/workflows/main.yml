@@ -21,6 +21,8 @@ jobs:
             output_name: coaro_decrypt-linux
           - os: windows-latest
             output_name: coaro_decrypt-windows.exe
+          - os: macos-latest
+            output_name: coaro_decrypt-macos
 
     steps:
       - name: Check out source
