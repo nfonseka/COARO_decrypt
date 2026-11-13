@@ -18,11 +18,11 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            output_name: coaro_decrypt-linux
+            suffix: linux
           - os: windows-latest
-            output_name: coaro_decrypt-windows.exe
+            suffix: windows
           - os: macos-latest
-            output_name: coaro_decrypt-macos
+            suffix: macos
 
     steps:
       - name: Check out source
@@ -36,23 +36,43 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -r requirements.txt
+          python -m pip install -r requirements-dev.txt
 
-      - name: Build executable
+      - name: Run tests
+        run: python -m pytest tests
+
+      - name: Build executables
         shell: bash
         run: |
-          pyinstaller minimal.py --onefile --name coaro_decrypt
-          if [ "${{ runner.os }}" = "Windows" ]; then
-            cp "dist/coaro_decrypt.exe" "${{ matrix.output_name }}"
-          else
-            cp "dist/coaro_decrypt" "${{ matrix.output_name }}"
-          fi
+          sep=":"; [ "${{ runner.os }}" = "Windows" ] && sep=";"
+          # macOS .app bundles must be onedir (onefile + windowed is deprecated and errors in PyInstaller 7)
+          mode="--onefile"; [ "${{ runner.os }}" = "macOS" ] && mode="--onedir"
+          pyinstaller app.py $mode --windowed --name coaro_decrypt \
+            --icon assets/icon.png --add-data "assets/icon.png${sep}assets"
+          pyinstaller minimal.py --onefile --name coaro_decrypt-cli
 
-      - name: Upload build artifact
+          mkdir release
+          suffix="${{ matrix.suffix }}"
+          case "${{ runner.os }}" in
+            Windows)
+              cp dist/coaro_decrypt.exe "release/coaro_decrypt-${suffix}.exe"
+              cp dist/coaro_decrypt-cli.exe "release/coaro_decrypt-cli-${suffix}.exe"
+              ;;
+            macOS)
+              (cd dist && zip -qry "../release/coaro_decrypt-${suffix}.app.zip" coaro_decrypt.app)
+              cp dist/coaro_decrypt-cli "release/coaro_decrypt-cli-${suffix}"
+              ;;
+            *)
+              cp dist/coaro_decrypt "release/coaro_decrypt-${suffix}"
+              cp dist/coaro_decrypt-cli "release/coaro_decrypt-cli-${suffix}"
+              ;;
+          esac
+
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.output_name }}
-          path: ${{ matrix.output_name }}
+          name: coaro_decrypt-${{ matrix.suffix }}
+          path: release/*
           if-no-files-found: error
 
   release:
