@@ -35,6 +35,6 @@ pyinstaller app.py --onefile --windowed --name coaro_decrypt --icon assets/icon.
 pyinstaller minimal.py --onefile --name coaro_decrypt-cli
 ```
 
-On Windows, use `;` instead of `:` in `--add-data`.
+On Windows, use `;` instead of `:` in `--add-data`. On macOS, use `--onedir` instead of `--onefile` for the GUI, which builds `dist/coaro_decrypt.app`.
 
 Pushing a `v*` tag runs `.github/workflows/main.yml`. It builds both executables for Linux, Windows and macOS and attaches them to a GitHub release.
