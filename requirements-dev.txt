@@ -1,0 +1,3 @@
+-r requirements.txt
+pytest
+pillow  # lets PyInstaller convert assets/icon.png into .ico/.icns
