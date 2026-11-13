@@ -17,7 +17,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-latest
+          # Pinned, not ubuntu-latest: PyInstaller bundles the runner's system libs (e.g. libglib),
+          # so the binary needs a glibc at least as new as the build machine's.
+          - os: ubuntu-24.04
             suffix: linux
           - os: windows-latest
             suffix: windows
